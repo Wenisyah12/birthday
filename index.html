@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    *{
+        box-sizing: border-box;
+        margin:0;
+        padding:0;
+    }
+    body{
+        width:100%;
+        min-height:100vh;
+        overflow:hidden;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        background:linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('IMG_1904.PNG');
+        background-attachment: fixed;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center 45%;
+    }
+    
+    #container{
+        display:block;
+        padding:30px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size:50px;
+        color:rgb(6, 34, 51);
+        text-shadow: 2px 3px 2px rgb(189, 207, 219);
+        font-weight: bold;
+        text-align: center;
+
+    }
+    .countdown{
+        display:flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size:30px;
+        color:rgb(6, 34, 51);
+        text-shadow: 2px 3px 2px rgb(189, 207, 219);
+       
+    }
+      .day , .hour , .minute, .second{
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        border:2px solid rgba(255,255,255,.4);
+        border-radius: 50%;
+        width:180px;
+        height:180px;
+        padding:40px;
+        margin: 15px 15px;
+        background-color:rgba(15, 22, 35, 0.6);
+        font-size: 30px;
+        font-weight: bold;
+        color:white;
+        text-shadow: 2px 4px 2px rgb(180, 194, 236);
+     }
+     #happybirthday{
+        display:none;
+        text-align: center;
+        justify-content: center;
+        color:rgb(192, 184, 171);
+        font-family: Arial, Helvetica, sans-serif;
+        text-shadow: 3px 5px 2px rgb(68, 62, 62);
+        animation: show 1.5s ease;
+     }
+     #happybirthday h3{
+        font-size: 40px;
+     }
+     #happybirthday p{
+        font-size:20px;
+     }
+
+     @keyframes show{
+         from {
+        opacity:0;
+        transform:scale(.5);
+    }
+
+         to{
+        opacity:1;
+        transform:scale(1);
+    }
+     }
+
+     @media screen and (max-width: 768px) {
+       
+        #container{
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            padding:20px;           
+        }
+        #container h3{
+            font-size:45px;
+            margin:15px 20px;  
+        }
+        .day , .hour , .minute, .second{
+            margin: 0 5px;
+            font-size:20px;
+            padding:30px;
+            width:100px;
+            height:100px;
+         }
+     }
+
+   
+</style>
+<body>
+    <div id="container">
+        <h3>Your Birthday is in</h3>
+        <div class="countdown">
+                <div class="day"></div>
+                <div class="hour"></div>
+                <div class="minute"></div>
+                <div class="second"></div>
+         </div>
+    </div>
+    <div id="happybirthday">
+        <h3>Happy Birthday!!!</h3>
+        <p>In this age, i hope you will be greater than before.<br>All of your sorrow will replace with many happiness and all your hope will become true ASAP.<br> We love you</p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+const date = new Date("2026-08-09T00:00:00").getTime();
+
+function updateCountdown() {
+    const now = new Date().getTime();
+    const distance = date - now;
+     if (distance <= 0) {
+        confetti({
+    particleCount:200,
+    spread:120,
+    origin:{
+        y:0.6
+    }
+});
+        clearInterval(timer);
+        // Menghapus countdown
+         document.querySelector("#container").style.display="none";
+    // tampilkan ucapan
+     document.getElementById("happybirthday").style.display="block";
+        //tampilan music
+     const music = document.getElementById("music");
+        return;
+    }
+
+
+    const day = Math.floor(distance / (1000 * 60 * 60 * 24));
+
+    const hour = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+
+    const minute = Math.floor(
+        (distance % (1000 * 60 * 60)) / (1000 * 60)
+    );
+
+    const second = Math.floor(
+        (distance % (1000 * 60)) / 1000
+    );
+
+    document.querySelector(".day").innerHTML = day + "<br>Day";
+    document.querySelector(".hour").innerHTML = hour + "<br>Hour";
+    document.querySelector(".minute").innerHTML = minute + "<br>Min";
+    document.querySelector(".second").innerHTML = second + "<br>Sec";
+}
+
+const timer= setInterval(updateCountdown, 1000);
+updateCountdown();
+</script>
+</body>
+</html>
